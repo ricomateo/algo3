@@ -9,29 +9,44 @@ DenotativeObject subclass: #HabitatDeAvispas
 
 !classDefinition: 'HabitatDeAvispas class' category: 'AvispasYAbejas'!
 HabitatDeAvispas class
-	instanceVariableNames: 'cantidadDeOrugas huevosDeAvispas cantidadDePolillas'!
+	instanceVariableNames: 'cantidadDeHuevosOrianaYOrnella cantidadDeOrugas huevosDeAvispas cantidadDePolillas cantidadDeHuevosDePolly'!
+
+!HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'nrm 4/22/2022 16:35:16'!
+cantidadDeHuevosConLaFirmaGeneticaDeOrianaYOrnella
+	^cantidadDeHuevosOrianaYOrnella.! !
+
+!HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'nrm 4/22/2022 16:42:18'!
+cantidadDeHuevosConLaFirmaGeneticaDePolly
+	^cantidadDeHuevosDePolly! !
 
 !HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'nrm 4/21/2022 20:01:04'!
 cantidadDeHuevosDeAvispas
 	^huevosDeAvispas.! !
 
-!HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'mr 4/22/2022 16:20:49'!
-reproduccionExitosaDeOrianaYOrnella
-       self consumirOruga.
+!HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'nrm 4/21/2022 20:16:25'!
+reproduccionExitosa
+       self consumirRecursos.
 	huevosDeAvispas :=huevosDeAvispas + 1.! !
 
-!HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'mr 4/22/2022 16:18:42'!
+!HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'nrm 4/22/2022 16:46:43'!
+reproduccionExitosaDeOrianaYOrnella
+       self consumirOruga.
+	cantidadDeHuevosOrianaYOrnella :=cantidadDeHuevosOrianaYOrnella + 1.! !
+
+!HabitatDeAvispas class methodsFor: 'HabitantesYFuturo' stamp: 'nrm 4/22/2022 16:46:12'!
 reproduccionExitosaDePolly
 	self consumirPolilla.
-	huevosDeAvispas :=huevosDeAvispas + 1.
+	cantidadDeHuevosDePolly := cantidadDeHuevosDePolly + 1.
 	! !
 
 
-!HabitatDeAvispas class methodsFor: 'reseteo' stamp: 'mr 4/22/2022 16:12:52'!
+!HabitatDeAvispas class methodsFor: 'reseteo' stamp: 'nrm 4/22/2022 16:44:28'!
 elInicioDeLosTiempos
 huevosDeAvispas:=0.
 cantidadDeOrugas:=0.
-cantidadDePolillas:=0.! !
+cantidadDePolillas:=0.
+cantidadDeHuevosDePolly :=0.
+cantidadDeHuevosOrianaYOrnella :=0.! !
 
 
 !HabitatDeAvispas class methodsFor: 'recursos' stamp: 'nrm 4/21/2022 20:11:59'!
@@ -58,6 +73,10 @@ consumirOruga
 consumirPolilla
 	cantidadDePolillas := cantidadDePolillas - 1.! !
 
+!HabitatDeAvispas class methodsFor: 'recursos' stamp: 'nrm 4/21/2022 20:17:30'!
+consumirRecursos
+          cantidadDeOrugas := cantidadDeOrugas -1.! !
+
 !HabitatDeAvispas class methodsFor: 'recursos' stamp: 'nrm 4/21/2022 20:09:55'!
 nuevaOruga
 	cantidadDeOrugas := cantidadDeOrugas + 1.! !
@@ -67,13 +86,15 @@ nuevaPolilla
 	cantidadDePolillas := cantidadDePolillas + 1.! !
 
 
-!HabitatDeAvispas class methodsFor: '--** private fileout/in **--' stamp: 'mr 4/22/2022 16:24:05'!
+!HabitatDeAvispas class methodsFor: '--** private fileout/in **--' stamp: 'nrm 4/22/2022 16:49:13'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
+	cantidadDeHuevosOrianaYOrnella := 1.
 	cantidadDeOrugas := 0.
 	huevosDeAvispas := 0.
-	cantidadDePolillas := 0.! !
+	cantidadDePolillas := 1.
+	cantidadDeHuevosDePolly := 0.! !
 
 
 !classDefinition: #PruebasReproduccionDeAvispas category: 'AvispasYAbejas'!
@@ -287,17 +308,17 @@ test21CuandoLaraLaAvispaNoTieneRecursosNoDejaUnHuevo
 cantidadDeHuevosConLaFirmaGeneticaDeLara
 	Assert isTrue: false description: 'Reemplazar esto por la implementación correspondiente'.! !
 
-!PruebasReproduccionDeAvispas class methodsFor: 'Para completar' stamp: 'JMB 4/19/2022 19:14:57'!
+!PruebasReproduccionDeAvispas class methodsFor: 'Para completar' stamp: 'nrm 4/22/2022 16:47:25'!
 cantidadDeHuevosConLaFirmaGeneticaDeOriana
-	Assert isTrue: false description: 'Reemplazar esto por la implementación correspondiente'.! !
+	^HabitatDeAvispas cantidadDeHuevosConLaFirmaGeneticaDeOrianaYOrnella .! !
 
-!PruebasReproduccionDeAvispas class methodsFor: 'Para completar' stamp: 'JMB 4/19/2022 19:15:03'!
+!PruebasReproduccionDeAvispas class methodsFor: 'Para completar' stamp: 'nrm 4/22/2022 16:48:34'!
 cantidadDeHuevosConLaFirmaGeneticaDeOrnella
-	Assert isTrue: false description: 'Reemplazar esto por la implementación correspondiente'.! !
+	^HabitatDeAvispas  cantidadDeHuevosConLaFirmaGeneticaDeOrianaYOrnella.! !
 
-!PruebasReproduccionDeAvispas class methodsFor: 'Para completar' stamp: 'JMB 4/19/2022 19:15:09'!
+!PruebasReproduccionDeAvispas class methodsFor: 'Para completar' stamp: 'nrm 4/22/2022 16:41:40'!
 cantidadDeHuevosConLaFirmaGeneticaDePolly
-	Assert isTrue: false description: 'Reemplazar esto por la implementación correspondiente'.! !
+	^HabitatDeAvispas cantidadDeHuevosConLaFirmaGeneticaDePolly.! !
 
 !PruebasReproduccionDeAvispas class methodsFor: 'Para completar' stamp: 'nrm 4/21/2022 19:45:57'!
 habitat
