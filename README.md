@@ -8,7 +8,6 @@ Al implementar las funcionalidades de los tests 01, 02 y 03, estos no pasaron a 
 
 A nuestro juicio, no nos quedó código repetido. En nuestro modelo el hábitat es el responsable de ver si hay suficientes polillas u orugas y dejar un huevo, porque si no los diferentes objetos que representan los diferentes tipos de avispas deberían conocer múltiples métodos y colaboradores del hábitat. Tendría sentido que fuera de la otra forma porque es una representación más fiel a la realidad (la avispa es quien busca la comida y pone los huevos). Consideramos que la forma que usamos es mejor debido que preserva el encapsulamiento (por ejemplo, al reproducirse laAvispaPolly ésta no accede al colaborador interno de HabitatDeAvispas para saber si hay polillas, sino que le envía el mensaje hayPolillas y el HabitatDeAvispas es quien accede a cantidadDePolillas y luego le responde true o false).
 
-
 ## Sobre código repetido 2
 
 Para guardar los huevos, creamos un colaborador para cada tipo de huevo (cantidadDeHuevosDePolly, etc..) y uno para la cantidad de huevos totales (cantidadDeHuevosDeAvispas). De esta forma no usamos ni diccionarios ni colecciones ya que buscábamos la solución más práctica a medida que avanzábamos a lo largo de los tests (como se nos mostró en la clase del jueves) por lo que nunca se nos llegó a plantear la opción de usar un diccionario o una colección. Creemos que fue lo más sencillo sin repetir código.
