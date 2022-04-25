@@ -2,7 +2,7 @@
 
 ## Sobre implementar funcionalidad
 
-Al implementar las funcionalidades de los tests 01, 02 y 03, estos no pasaron a la primera, sino que tuvimos que hacer modificaciones para pasar cada prueba. Por ejemplo, para la prueba 01 declaramos un colaborador interno al que le asignamos el valor 0 y como no se modificaba siempre devolvía 0. Luego para el test 02 agregamos la funcionalidad reproduccionExitosa (sumaba huevos y consumía recursos). Nos parece que implementar una funcionalidad de esta manera facilita a la hora de programar el trabajo que se debe hacer ya que cada test implica dar un pequeño paso, y de esta forma se obtiene un feedback inmediato.
+Al implementar las funcionalidades de los tests 01, 02 y 03, estos no pasaron a la primera, sino que tuvimos que hacer modificaciones para pasar cada prueba. Por ejemplo, para la prueba 01 declaramos un colaborador interno al que le asignamos el valor 0 y como no se modificaba siempre devolvía 0. Luego para el test 02 agregamos la funcionalidad ```reproduccionExitosa``` (sumaba huevos y consumía recursos). Nos parece que implementar una funcionalidad de esta manera facilita a la hora de programar el trabajo que se debe hacer ya que cada test implica dar un pequeño paso, y de esta forma se obtiene un feedback inmediato.
 
 ## Sobre código repetido
 
