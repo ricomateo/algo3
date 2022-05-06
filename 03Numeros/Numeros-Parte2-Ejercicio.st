@@ -104,7 +104,7 @@ test15EnteroDividesFraccionCorrectly
 
 	self assert: fiveHalfs equals: one / twoFifth! !
 
-!NumeroTest methodsFor: 'tests' stamp: 'JS 5/5/2022 03:43:58'!
+!NumeroTest methodsFor: 'tests' stamp: 'mr 5/6/2022 14:51:51'!
 test16FraccionDividesEnteroCorrectly
 
 	self assert: twoTwentyfifth equals: twoFifth / five! !
@@ -309,10 +309,10 @@ Object subclass: #Numero
 
 	self subclassResponsibility ! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:49'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'mr 5/6/2022 14:50:19'!
 / aDivisor
 
-	self subclassResponsibility ! !
+	self subclassResponsibility.! !
 
 !Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:37:13'!
 negated
@@ -350,8 +350,31 @@ beAddedToAFraccion: anAugend
 beAddedToAnEntero: anAugend
 	self subclassResponsibility.! !
 
+!Numero methodsFor: 'as yet unclassified' stamp: 'mr 5/6/2022 14:59:21'!
+beDivisorToAFraccion: aDividend
+
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'mr 5/6/2022 14:51:28'!
+beDivisorToAnEntero: aDividend
+	
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'mr 5/6/2022 14:51:06'!
+beMultipliedTAnEntero: aMultiplier
+	
+	self subclassResponsibility.! !
+
 !Numero methodsFor: 'as yet unclassified' stamp: 'nrm 5/5/2022 20:59:49'!
 beMultipliedToAFraccion: aMultiplier
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'nrm 5/6/2022 16:25:37'!
+beSubtrahendToAFraccion: aMinuend
+	^self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'nrm 5/6/2022 16:09:01'!
+beSubtrahendToAnEntero: aMinuend 
 	self subclassResponsibility.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -392,15 +415,14 @@ Numero subclass: #Entero
 + anAdder 
 	^ anAdder beAddedToAnEntero: self.! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:40:37'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'nrm 5/6/2022 16:07:01'!
 - aSubtrahend 
-	
-	^ self class with: value - aSubtrahend integerValue.! !
+	^ aSubtrahend beSubtrahendToAnEntero: self.! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 23:14'!
-/ aDivisor 
+!Entero methodsFor: 'arithmetic operations' stamp: 'mr 5/6/2022 14:49:52'!
+/ aDivisor
 	
-	^Fraccion with: self over: aDivisor! !
+	^aDivisor beDivisorToAnEntero: self.! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'HAW 9/24/2018 08:47:50'!
 fibonacci
@@ -486,6 +508,17 @@ beAddedToAFraccion: anAugend
 beAddedToAnEntero: anAugend
 	^self class with: anAugend integerValue + value.! !
 
+!Entero methodsFor: 'as yet unclassified' stamp: 'mr 5/6/2022 14:58:22'!
+beDivisorToAFraccion: aDividend
+	
+	^aDividend numerator / (aDividend denominator * self).
+	! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'mr 5/6/2022 14:49:12'!
+beDivisorToAnEntero: aDividend
+	
+	^Fraccion with: aDividend over: self.! !
+
 !Entero methodsFor: 'as yet unclassified' stamp: 'nrm 5/5/2022 20:59:06'!
 beMultipliedToAFraccion: aMultiplier
 	^self * aMultiplier numerator / aMultiplier denominator.! !
@@ -493,6 +526,14 @@ beMultipliedToAFraccion: aMultiplier
 !Entero methodsFor: 'as yet unclassified' stamp: 'nrm 5/5/2022 20:46:01'!
 beMultipliedToAnEntero: aMultiplier
 	^self class with: value * aMultiplier integerValue.! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'nrm 5/6/2022 16:24:43'!
+beSubtrahendToAFraccion: aMinuend
+	^aMinuend numerator - aMinuend denominator * self / aMinuend denominator.! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'nrm 5/6/2022 16:08:06'!
+beSubtrahendToAnEntero: aMinuend 
+	 ^self class with: aMinuend integerValue - value.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -533,21 +574,16 @@ Numero subclass: #Fraccion
 + anAdder 
 	^anAdder beAddedToAFraccion: self.! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:43:50'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'nrm 5/6/2022 16:24:16'!
 - aSubtrahend 
 	
-	| newNumerator newDenominator |
-	
-	newNumerator := (numerator * aSubtrahend denominator) - (denominator * aSubtrahend numerator).
-	newDenominator := denominator * aSubtrahend denominator.
-	
-	^newNumerator / newDenominator 
+	^aSubtrahend beSubtrahendToAFraccion: self.
 ! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 23:14'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'mr 5/6/2022 14:58:47'!
 / aDivisor 
-	
-	^(numerator * aDivisor denominator) / (denominator * aDivisor numerator)! !
+
+	^aDivisor beDivisorToAFraccion: self.! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
@@ -619,6 +655,16 @@ beAddedToAFraccion: anAugend
 beAddedToAnEntero: anAugend
 	^anAugend value * self denominator + self numerator/self denominator.! !
 
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'mr 5/6/2022 14:57:20'!
+beDivisorToAFraccion: aDividend
+
+	^(aDividend numerator * self denominator) / (aDividend denominator * self numerator).! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'mr 5/6/2022 14:48:02'!
+beDivisorToAnEntero: aDividend
+	
+	^Fraccion with: aDividend * self denominator over: self numerator.! !
+
 !Fraccion methodsFor: 'as yet unclassified' stamp: 'nrm 5/5/2022 20:55:21'!
 beMultipliedToAFraccion: aMultiplier
 	^(aMultiplier numerator * numerator) / (aMultiplier denominator * denominator).! !
@@ -628,15 +674,22 @@ beMultipliedToAnEntero: aMultiplier
 
 	^aMultiplier * self numerator / self denominator.! !
 
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'nrm 5/6/2022 16:22:21'!
+beSubtrahendToAFraccion: aMinuend
+	^((aMinuend numerator *  denominator) - (aMinuend denominator * numerator))/(aMinuend denominator * denominator).! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'nrm 5/6/2022 16:05:23'!
+beSubtrahendToAnEntero: aMinuend 
+	^aMinuend * (denominator) - (numerator)/denominator ! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Fraccion class' category: 'Numeros-Parte2-Ejercicio'!
 Fraccion class
 	instanceVariableNames: ''!
 
-!Fraccion class methodsFor: 'intance creation' stamp: 'NR 9/23/2018 23:45:19'!
+!Fraccion class methodsFor: 'intance creation' stamp: 'mr 5/6/2022 14:37:51'!
 with: aDividend over: aDivisor
-
 	| greatestCommonDivisor numerator denominator |
 	
 	aDivisor isZero ifTrue: [ self error: self canNotDivideByZeroErrorDescription ].
