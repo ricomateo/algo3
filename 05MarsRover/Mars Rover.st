@@ -68,32 +68,32 @@ test09MarsRoverExecutesTheCommandStringUntilInvalidCharacterIsFound
 	self assert: marsRover position equals: 1@3.! !
 
 
-!classDefinition: #Compass category: 'Mars Rover'!
-Object subclass: #Compass
+!classDefinition: #Direction category: 'Mars Rover'!
+Object subclass: #Direction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Mars Rover'!
 
-!Compass methodsFor: 'information' stamp: 'nrm 5/27/2022 16:27:11'!
+!Direction methodsFor: 'information' stamp: 'nrm 5/27/2022 16:27:11'!
 direction
 	self subclassResponsibility ! !
 
-!Compass methodsFor: 'information' stamp: 'mr 5/30/2022 16:01:52'!
+!Direction methodsFor: 'information' stamp: 'mr 5/30/2022 16:01:52'!
 leftDirection
 	self subclassResponsibility ! !
 
-!Compass methodsFor: 'information' stamp: 'mr 5/30/2022 16:02:11'!
+!Direction methodsFor: 'information' stamp: 'mr 5/30/2022 16:02:11'!
 rightDirection
 	self subclassResponsibility ! !
 
-!Compass methodsFor: 'information' stamp: 'nrm 5/27/2022 16:46:31'!
+!Direction methodsFor: 'information' stamp: 'nrm 5/27/2022 16:46:31'!
 vectorDirector
 	self subclassResponsibility ! !
 
 
 !classDefinition: #East category: 'Mars Rover'!
-Compass subclass: #East
+Direction subclass: #East
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -117,7 +117,7 @@ vectorDirector
 
 
 !classDefinition: #North category: 'Mars Rover'!
-Compass subclass: #North
+Direction subclass: #North
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -141,7 +141,7 @@ vectorDirector
 
 
 !classDefinition: #South category: 'Mars Rover'!
-Compass subclass: #South
+Direction subclass: #South
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -165,7 +165,7 @@ vectorDirector
 
 
 !classDefinition: #West category: 'Mars Rover'!
-Compass subclass: #West
+Direction subclass: #West
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -200,11 +200,11 @@ direction
 	^direction direction.! !
 
 
-!MarsRover methodsFor: 'commands' stamp: 'mr 5/30/2022 16:05:08'!
+!MarsRover methodsFor: 'commands' stamp: 'nrm 6/2/2022 14:41:10'!
 excecuteCommand: aCommandString 
 	| characters commandToExecute |
 	characters := self convertCommandStringToCommandCollection: aCommandString.
-	characters do: [:aCharacter | commandToExecute := commands at: aCharacter ifAbsent: [^self].
+	characters do: [:aCharacter | commandToExecute := commands at: aCharacter.
 		commandToExecute value ]! !
 
 
@@ -230,19 +230,11 @@ setCommands
 	commands at: $r put: [self rotateRight ]! !
 
 
-!MarsRover methodsFor: 'private' stamp: 'mr 5/30/2022 16:05:08'!
+!MarsRover methodsFor: 'private' stamp: 'nrm 6/2/2022 14:40:32'!
 convertCommandStringToCommandCollection: aStringToConvert
-	| index collection |
+	| collection |
 	collection := OrderedCollection new.
-	index := 0.
-	[index < (aStringToConvert size)] whileTrue: [
-		index:= index + 1.
-		(commands includesKey: (aStringToConvert at: index))
-		ifTrue: [
-			collection addLast: (aStringToConvert at: index)]
-		ifFalse: [
-			^ collection].
-	].
+	aStringToConvert do: [:aCharacter| (commands includesKey: aCharacter) ifTrue: [collection addLast: aCharacter ] ifFalse:[^ collection] ].
 	^ collection.! !
 
 !MarsRover methodsFor: 'private' stamp: 'mr 5/30/2022 14:57:26'!
